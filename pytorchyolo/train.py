@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 from __future__ import division
+from ast import parse
 
 import os
 import argparse
@@ -63,6 +64,7 @@ def run():
     parser = argparse.ArgumentParser(description="Trains the YOLO model.")
     parser.add_argument("-m", "--model", type=str, default="config/yolov3.cfg", help="Path to model definition file (.cfg)")
     parser.add_argument("-d", "--data", type=str, default="config/coco.data", help="Path to data config file (.data)")
+    parser.add_argument('--yolo-dataset', type=str, help="yolo like yaml dataset file")
     parser.add_argument("-e", "--epochs", type=int, default=300, help="Number of epochs")
     parser.add_argument("-v", "--verbose", action='store_true', help="Makes the training more verbose")
     parser.add_argument("--n_cpu", type=int, default=8, help="Number of cpu threads to use during batch generation")
@@ -89,7 +91,7 @@ def run():
 
     # Get data configuration
     data_config = parse_data_config(args.data)
-
+    
 
     train_path = data_config["train"]
     valid_path = data_config["valid"]
