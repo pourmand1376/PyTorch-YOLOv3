@@ -9,6 +9,7 @@ import tqdm
 import torch
 from torch.utils.data import DataLoader
 import torch.optim as optim
+import yaml
 
 from models import load_model
 from utils.logger import Logger
@@ -88,6 +89,8 @@ def run():
 
     # Get data configuration
     data_config = parse_data_config(args.data)
+
+
     train_path = data_config["train"]
     valid_path = data_config["valid"]
     class_names = load_classes(data_config["names"])

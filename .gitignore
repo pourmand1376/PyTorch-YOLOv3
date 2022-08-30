@@ -16,3 +16,7 @@ checkpoints/
 logs/
 
 .python-version
+yolov3-tiny.weights
+yolov3.weights
+.gitignore
+darknet53.conv.74
