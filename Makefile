@@ -14,7 +14,7 @@ pull: ## update git branch
 
 create: ## create conda env
 	conda create -n yolov3 python=3.9
-	$(CONDA_ACTIVATE)
+	$(CONDA)
 
 activate: ## activate conda env
 	$(CONDA_ACTIVATE)
@@ -22,6 +22,7 @@ activate: ## activate conda env
 	@echo $$PATH
 
 install: pull  ## install requirements for the first time
+	$(CONDA)
 	pip3 install poetry --user
 	poetry install
 	
