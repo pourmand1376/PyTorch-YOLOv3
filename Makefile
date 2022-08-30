@@ -18,8 +18,8 @@ create: ## create conda env
 
 install: pull  ## install requirements for the first time
 	$(CONDA)
-	echo $$PATH
-	poetry
+	pip3 install poetry --user
+	poetry install	
 	
 train_simple: pull ## train yolov3 model for the first time
 	python train.py 
