@@ -17,7 +17,7 @@ create: ## create conda env
 
 activate: ## activate conda env
 	$(CONDA_ACTIVATE) yolov3
-	PATH=$PATH:$(conda info --base)/envs/yolov3/bin
+	PATH=$$PATH:$$(conda info --base)/envs/yolov3/bin
 
 install: pull activate ## install requirements for the first time
 	pip3 install poetry --user; poetry install
