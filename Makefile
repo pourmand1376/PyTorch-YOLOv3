@@ -1,8 +1,9 @@
 .ONESHELL:
 
 SHELL = /bin/bash
-CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
-
+CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate yolov3;
+CONDA_PATH = export PATH=$$PATH:$$(conda info --base)/envs/yolov3/bin;
+CONDA = $(CONDA_ACTIVATE); $(CONDA_PATH);
 
 .PHONY: help
 help: pull## show this help message
@@ -13,16 +14,14 @@ pull: ## update git branch
 
 create: ## create conda env
 	conda create -n yolov3 python=3.9
-	$(CONDA_ACTIVATE) yolov3
+	$(CONDA_ACTIVATE)
 
 activate: ## activate conda env
-	$(CONDA_ACTIVATE) yolov3
+	$(CONDA_ACTIVATE)
 	export PATH=$$PATH:$$(conda info --base)/envs/yolov3/bin
 	@echo $$PATH
 
-install: pull activate ## install requirements for the first time
-	make activate
-	echo $$PATH
+install: pull  ## install requirements for the first time
 	pip3 install poetry --user
 	poetry install
 	
