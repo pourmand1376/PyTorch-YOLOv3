@@ -2,7 +2,7 @@
 
 SHELL = /bin/bash
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate yolov3;
-CONDA_PATH = export PATH=$$PATH:$$(conda info --base)/envs/yolov3/bin;
+CONDA_PATH = export PATH=$$PATH:$$(conda info --base)/envs/yolov3/bin
 CONDA = $(CONDA_ACTIVATE) $(CONDA_PATH)
 
 .PHONY: help
@@ -22,9 +22,7 @@ activate: ## activate conda env
 	@echo $$PATH
 
 install: pull  ## install requirements for the first time
-	$(CONDA)
-	pip3 install poetry --user
-	poetry install
+	$(CONDA); echo $$PATH; pip3 install poetry --user; poetry install;
 	
 train_simple: pull activate ## train yolov3 model for the first time
 	python train.py 
