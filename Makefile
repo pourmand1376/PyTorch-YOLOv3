@@ -16,4 +16,8 @@ create: ## create conda env
 	conda create -n yolov3 python=3.9
 	$(CONDA_ACTIVATE) yolov3
 
-
+activate: ## activate conda env
+	$(CONDA_ACTIVATE) yolov3
+	
+train_simple: ## train yolov3 model for the first time
+	python train.py 
