@@ -21,6 +21,7 @@ activate: ## activate conda env
 	@echo $$PATH
 
 install: pull activate ## install requirements for the first time
+	echo $$PATH
 	pip3 install poetry --user
 	poetry install
 	
