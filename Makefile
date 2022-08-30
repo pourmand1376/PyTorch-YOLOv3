@@ -16,9 +16,9 @@ create: ## create conda env
 	conda create -n yolov3 python=3.9
 	$(CONDA)
 
-
 install: pull  ## install requirements for the first time
 	$(CONDA)
+	echo $$PATH
 	
 train_simple: pull ## train yolov3 model for the first time
 	python train.py 
