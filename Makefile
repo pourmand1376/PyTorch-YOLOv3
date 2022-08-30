@@ -2,8 +2,8 @@
 
 SHELL = /bin/bash
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate yolov3;
-CONDA_PATH = export PATH=$$PATH:$$(conda info --base)/envs/yolov3/bin: $$HOME/.local/bin
-CONDA = $(CONDA_ACTIVATE) $(CONDA_PATH)
+CONDA_PATH = export PATH=$$PATH:$$(conda info --base)/envs/yolov3/bin
+CONDA = $(CONDA_ACTIVATE) $(CONDA_PATH); export PATH=$$PATH:$$HOME/.local/bin
 
 .PHONY: help
 help: pull## show this help message
