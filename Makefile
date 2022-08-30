@@ -24,4 +24,4 @@ install: pull  ## install requirements for the first time
 	poetry install	
 
 train_simple: pull ## train yolov3 model for the first time
-	python train.py 
+	python train.py --verbose --data config/custom.data 
