@@ -20,8 +20,7 @@ activate: ## activate conda env
 	$(CONDA_ACTIVATE) yolov3
 
 install: pull activate ## install requirements for the first time
-	pip3 install poetry --user
-	poetry install
+	pip3 install poetry --user; poetry install
 	
 train_simple: pull activate ## train yolov3 model for the first time
 	python train.py 
