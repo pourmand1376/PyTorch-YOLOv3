@@ -238,7 +238,7 @@ def run():
 
             # Tensorboard logging
             tensorboard_log = [
-                >("train/iou_loss", float(loss_components[0])),
+                ("train/iou_loss", float(loss_components[0])),
                 ("train/obj_loss", float(loss_components[1])),
                 ("train/class_loss", float(loss_components[2])),
                 ("train/loss", to_cpu(loss).item())]
