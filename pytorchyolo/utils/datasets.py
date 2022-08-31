@@ -8,6 +8,7 @@ import warnings
 import numpy as np
 from PIL import Image
 from PIL import ImageFile
+from pathlib import Path
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -57,8 +58,9 @@ class ImageFolder(Dataset):
 
 class ListDataset(Dataset):
     def __init__(self, list_path, img_size=416, multiscale=True, transform=None):
-        with open(list_path, "r") as file:
-            self.img_files = file.readlines()
+        #with open(list_path, "r") as file:
+        #    self.img_files = file.readlines()
+        self.img_files = [str(path) for path in Path(list_path).iterdir()]
 
         self.label_files = []
         for path in self.img_files:
@@ -68,7 +70,10 @@ class ListDataset(Dataset):
                 f"Image path must contain a folder named 'images'! \n'{image_dir}'"
             label_file = os.path.join(label_dir, os.path.basename(path))
             label_file = os.path.splitext(label_file)[0] + '.txt'
-            self.label_files.append(label_file)
+            if Path(label_file).exists():
+                self.label_files.append(label_file)
+            else:
+                self.label_files.append('')
 
         self.img_size = img_size
         self.max_objects = 100
@@ -95,13 +100,14 @@ class ListDataset(Dataset):
         # ---------
         #  Label
         # ---------
+        boxes = np.zeros(shape=(1,5))
         try:
             label_path = self.label_files[index % len(self.img_files)].rstrip()
-
-            # Ignore warning if file is empty
-            with warnings.catch_warnings():
-                warnings.simplefilter("ignore")
-                boxes = np.loadtxt(label_path).reshape(-1, 5)
+            if len(label_path) > 0:
+                # Ignore warning if file is empty
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    boxes = np.loadtxt(label_path).reshape(-1, 5)
         except Exception:
             print(f"Could not read label '{label_path}'.")
             return

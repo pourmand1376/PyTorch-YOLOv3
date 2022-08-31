@@ -6,6 +6,7 @@ from ast import parse
 import os
 import argparse
 import tqdm
+from pathlib import Path
 
 import torch
 from torch.utils.data import DataLoader
@@ -91,11 +92,16 @@ def run():
 
     # Get data configuration
     data_config = parse_data_config(args.data)
-    
-
     train_path = data_config["train"]
     valid_path = data_config["valid"]
     class_names = load_classes(data_config["names"])
+
+    yolo_config=Path(args.yolo_dataset).read_text()
+    yolo_config = yaml.safe_load(yolo_config)
+
+    class_names = yolo_config['names']
+    train_path = yolo_config['train']
+    valid_path = yolo_config['val']
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # ############
