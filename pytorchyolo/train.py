@@ -28,6 +28,8 @@ from terminaltables import AsciiTable
 from torchsummary import summary
 
 
+
+
 def _create_data_loader(img_path, batch_size, img_size, n_cpu, multiscale_training=False):
     """Creates a DataLoader for training.
 
@@ -78,6 +80,7 @@ def run():
     parser.add_argument("--nms_thres", type=float, default=0.5, help="Evaluation: IOU threshold for non-maximum suppression")
     parser.add_argument("--logdir", type=str, default="logs", help="Directory for training log files (e.g. for TensorBoard)")
     parser.add_argument("--seed", type=int, default=-1, help="Makes results reproducable. Set -1 to disable.")
+    parser.add_argument("--device", type=int,default=0)
     args = parser.parse_args()
     print(f"Command line arguments: {args}")
 
