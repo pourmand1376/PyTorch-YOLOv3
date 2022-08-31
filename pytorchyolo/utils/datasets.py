@@ -83,21 +83,11 @@ class ListDataset(Dataset):
         self.batch_count = 0
         self.transform = transform
 
+    def get_only_label(self,index):
+        return self.__getitem__(index,True)
 
-    def __getitem__(self, index):
-
-        # ---------
-        #  Image
-        # ---------
-        try:
-
-            img_path = self.img_files[index % len(self.img_files)].rstrip()
-
-            img = np.array(Image.open(img_path).convert('RGB'), dtype=np.uint8)
-        except Exception:
-            print(f"Could not read image '{img_path}'.")
-            return
-
+    def __getitem__(self, index,only_load_labels=False):
+        
         # ---------
         #  Label
         # ---------
@@ -112,6 +102,22 @@ class ListDataset(Dataset):
         except Exception:
             print(f"Could not read label '{label_path}'.")
             return
+
+        if only_load_labels:
+            return None,None,boxes
+        # ---------
+        #  Image
+        # ---------
+        try:
+
+            img_path = self.img_files[index % len(self.img_files)].rstrip()
+
+            img = np.array(Image.open(img_path).convert('RGB'), dtype=np.uint8)
+        except Exception:
+            print(f"Could not read image '{img_path}'.")
+            return
+
+       
 
         # -----------
         #  Transform

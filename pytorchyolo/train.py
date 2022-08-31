@@ -31,8 +31,8 @@ import numpy as np
 
 def create_weighted_sampler(dataset):
     weights = []
-    for item in dataset:
-        if item[2].shape[0] > 0:
+    for i in range(len(dataset)):
+        if dataset.get_only_label(i)[2].shape[0] > 0:
             weights.append(0.99)
         else:
             weights.append(0.01)
@@ -225,7 +225,7 @@ def run():
             # ############
             # Log progress
             # ############
-            if batch_i % 200:
+            if batch_i % 200== 0:
                 print(AsciiTable(
                     [
                         ["Type", "Value"],
@@ -238,7 +238,7 @@ def run():
 
             # Tensorboard logging
             tensorboard_log = [
-                ("train/iou_loss", float(loss_components[0])),
+                >("train/iou_loss", float(loss_components[0])),
                 ("train/obj_loss", float(loss_components[1])),
                 ("train/class_loss", float(loss_components[2])),
                 ("train/loss", to_cpu(loss).item())]
