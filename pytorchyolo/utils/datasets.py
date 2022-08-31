@@ -91,7 +91,7 @@ class ListDataset(Dataset):
         # ---------
         #  Label
         # ---------
-        boxes = np.zeros(shape=(1,5), dtype=np.float)
+        boxes = np.zeros(shape=(0,5), dtype=np.float)
         try:
             label_path = self.label_files[index % len(self.img_files)].rstrip()
             if len(label_path) > 0:

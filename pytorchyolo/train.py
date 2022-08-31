@@ -63,7 +63,8 @@ def _create_data_loader(img_path, batch_size, img_size, n_cpu, multiscale_traini
         img_path,
         img_size=img_size,
         multiscale=multiscale_training,
-        transform=AUGMENTATION_TRANSFORMS)
+        #transform=AUGMENTATION_TRANSFORMS)
+        transform=None)
     sampler = create_weighted_sampler(dataset)
     dataloader = DataLoader(
         dataset,
