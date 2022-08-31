@@ -26,8 +26,21 @@ from test import _evaluate, _create_validation_data_loader
 from terminaltables import AsciiTable
 
 from torchsummary import summary
+from torch.utils.data.sampler import WeightedRandomSampler
+import numpy as np
 
+def create_weighted_sampler(dataset):
+    weights = []
+    for item in dataset:
+        if item[2].shape[0] > 0:
+            weights.append(0.99)
+        else:
+            weights.append(0.01)
 
+    final = np.array(weights)
+    # you can set the num_samples argument to anything. It basically changes your iteration count in every epoch
+
+    return WeightedRandomSampler(weights=torch.from_numpy(final), num_samples=len(weights))
 
 
 def _create_data_loader(img_path, batch_size, img_size, n_cpu, multiscale_training=False):
@@ -51,10 +64,12 @@ def _create_data_loader(img_path, batch_size, img_size, n_cpu, multiscale_traini
         img_size=img_size,
         multiscale=multiscale_training,
         transform=AUGMENTATION_TRANSFORMS)
+    sampler = create_weighted_sampler(dataset)
     dataloader = DataLoader(
         dataset,
         batch_size=batch_size,
-        shuffle=True,
+        shuffle=False,
+        sampler = sampler,
         num_workers=n_cpu,
         pin_memory=True,
         collate_fn=dataset.collate_fn,
@@ -210,7 +225,7 @@ def run():
             # ############
             # Log progress
             # ############
-            if args.verbose:
+            if batch_i % 200:
                 print(AsciiTable(
                     [
                         ["Type", "Value"],

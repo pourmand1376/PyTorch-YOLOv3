@@ -61,7 +61,7 @@ class ListDataset(Dataset):
         #with open(list_path, "r") as file:
         #    self.img_files = file.readlines()
         self.img_files = [str(path) for path in Path(list_path).iterdir()]
-
+        
         self.label_files = []
         for path in self.img_files:
             image_dir = os.path.dirname(path)
@@ -82,6 +82,7 @@ class ListDataset(Dataset):
         self.max_size = self.img_size + 3 * 32
         self.batch_count = 0
         self.transform = transform
+
 
     def __getitem__(self, index):
 

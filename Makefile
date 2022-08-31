@@ -28,5 +28,4 @@ train_simple: pull ## train yolov3 model for the first time
 	python pytorchyolo/train.py --data config/custom.data \
 		--yolo-dataset "/mnt/new_ssd/projects/Anevrism/Data/brain_cta/output_folder/database.yaml" \
 		--model config/yolov3.cfg \
-		--pretrained_weights yolov3.weights \
-		--verbose
+		--pretrained_weights yolov3.weights
